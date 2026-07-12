@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f6efdf;
+  --ink: #4a3a30;
+  --brown: #785b4e;
+  --brown-light: #866a5b;
+  --sage: #7a816c;
+  --sage-light: #8e967d;
+  --pink: #d68d84;
+  --sand: #cfbb9f;
+  --card-bg: #fffaf0;
+}
+
+body {
+  background: var(--background);
+  color: var(--ink);
+  font-family: -apple-system, "Segoe UI", sans-serif;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--sand);
+  border-radius: 16px;
+  padding: 20px;
+  border-left: 3px solid var(--brown);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(207, 187, 159, 0.5);
+  padding-bottom: 8px;
+}
+
+.card-header h3 {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.card-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--sand);
+  border-radius: 999px;
+  padding: 8px;
+  color: var(--brown);
+  transition: all 0.15s;
+}
+.card-btn:hover {
+  background: var(--sand);
+}
+
+.input,
+.textarea {
+  background: #fffdf8;
+  border: 1px solid var(--sand);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+}
+.input:focus,
+.textarea:focus {
+  border-color: var(--brown);
+}
+.textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.label {
+  font-size: 12px;
+  opacity: 0.6;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 1.5px solid var(--sand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: white;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.checkbox-done {
+  background: var(--sage);
+  border-color: var(--sage);
+}
+
+.habit-cell {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  border: 1.5px solid;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: all 0.15s;
+}
+.habit-cell:hover {
+  filter: brightness(0.95);
+}
+
+.tab-btn {
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--brown);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+}
+.tab-btn:hover {
+  background: rgba(207, 187, 159, 0.3);
+}
+.tab-btn-active {
+  background: var(--brown);
+  color: white;
+}
