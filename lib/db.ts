@@ -34,7 +34,10 @@ export async function loadData(): Promise<DashboardData> {
       await sql`INSERT INTO dashboard_data (user_id, data) VALUES (${USER_ID}, ${JSON.stringify(emptyDashboardData)})`;
       return emptyDashboardData;
     }
-    return rows[0].data as DashboardData;
+    // Merge with defaults so old data (from a previous schema) doesn't crash the
+    // app when it's missing keys the current UI expects — any field not present
+    // in what's stored falls back to the default instead of being undefined.
+    return { ...emptyDashboardData, ...(rows[0].data as Partial<DashboardData>) };
   }
 
   // Local fallback: a JSON file on disk. Lets us build and test before Neon is wired up.
@@ -44,7 +47,8 @@ export async function loadData(): Promise<DashboardData> {
       fs.writeFileSync(LOCAL_FALLBACK_PATH, JSON.stringify(emptyDashboardData, null, 2));
       return emptyDashboardData;
     }
-    return JSON.parse(fs.readFileSync(LOCAL_FALLBACK_PATH, "utf-8"));
+    const stored = JSON.parse(fs.readFileSync(LOCAL_FALLBACK_PATH, "utf-8")) as Partial<DashboardData>;
+    return { ...emptyDashboardData, ...stored };
   } catch {
     return emptyDashboardData;
   }
