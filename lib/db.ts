@@ -1,6 +1,4 @@
 import { neon } from "@neondatabase/serverless";
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Sql = any;
 import fs from "fs";
 import path from "path";
 import { DashboardData, emptyDashboardData } from "./types";
@@ -9,6 +7,9 @@ import { DashboardData, emptyDashboardData } from "./types";
 const USER_ID = "shailen";
 
 const LOCAL_FALLBACK_PATH = path.join(process.cwd(), ".data", "dashboard.json");
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Sql = any;
 
 function hasNeon() {
   return !!process.env.DATABASE_URL;

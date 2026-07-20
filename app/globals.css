@@ -1,129 +1,232 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f6efdf;
-  --ink: #4a3a30;
-  --brown: #785b4e;
-  --brown-light: #866a5b;
-  --sage: #7a816c;
-  --sage-light: #8e967d;
-  --pink: #d68d84;
-  --sand: #cfbb9f;
-  --card-bg: #fffaf0;
+  --bg: #0a0a0d;
+  --panel: #111114;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --ink: #e8e8ec;
+  --ink-dim: rgba(232, 232, 236, 0.5);
+  --ink-faint: rgba(232, 232, 236, 0.3);
+  --accent: #7dd3a8;
+  --accent-red: #e05c5c;
+  --mono: "SF Mono", "JetBrains Mono", ui-monospace, Menlo, monospace;
 }
 
 body {
-  background: var(--background);
+  background: var(--bg);
   color: var(--ink);
   font-family: -apple-system, "Segoe UI", sans-serif;
 }
 
-.card {
-  background: var(--card-bg);
-  border: 1px solid var(--sand);
-  border-radius: 16px;
-  padding: 20px;
-  border-left: 3px solid var(--brown);
+.mono {
+  font-family: var(--mono);
 }
 
-.card-header {
+.os-shell {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(207, 187, 159, 0.5);
-  padding-bottom: 8px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(17, 17, 20, 0.8);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-.card-header h3 {
-  font-weight: 600;
-  color: var(--ink);
+.brand {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-
-.card-btn {
-  background: var(--card-bg);
-  border: 1px solid var(--sand);
+.brand .dot {
+  width: 6px;
+  height: 6px;
   border-radius: 999px;
-  padding: 8px;
-  color: var(--brown);
+  background: var(--accent);
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.nav-tab {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 6px 14px;
+  border-radius: 6px;
+  color: var(--ink-faint);
   transition: all 0.15s;
 }
-.card-btn:hover {
-  background: var(--sand);
+.nav-tab:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.04);
+}
+.nav-tab-active {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-strong);
 }
 
-.input,
-.textarea {
-  background: #fffdf8;
-  border: 1px solid var(--sand);
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+}
+
+.os-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 300px) minmax(400px, 1fr) minmax(260px, 300px);
+  gap: 14px;
+  padding: 16px 20px 60px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+@media (max-width: 1100px) {
+  .os-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.os-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tile {
+  background: var(--panel);
+  border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 8px 12px;
-  font-size: 14px;
+  padding: 16px;
+}
+
+.tile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.tile-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+.tile-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+}
+
+.os-input,
+.os-textarea {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 13px;
   color: var(--ink);
   outline: none;
-}
-.input:focus,
-.textarea:focus {
-  border-color: var(--brown);
-}
-.textarea {
   width: 100%;
-  resize: vertical;
+}
+.os-input:focus,
+.os-textarea:focus {
+  border-color: var(--border-strong);
+}
+.os-input::placeholder,
+.os-textarea::placeholder {
+  color: var(--ink-faint);
 }
 
-.label {
-  font-size: 12px;
-  opacity: 0.6;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.checkbox {
-  width: 20px;
-  height: 20px;
-  border-radius: 6px;
-  border: 1.5px solid var(--sand);
+.os-checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1.5px solid var(--border-strong);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  color: white;
-  transition: all 0.15s;
+  font-size: 10px;
   flex-shrink: 0;
+  transition: all 0.15s;
 }
-.checkbox-done {
-  background: var(--sage);
-  border-color: var(--sage);
+.os-checkbox-done {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0a0a0d;
 }
 
-.habit-cell {
-  width: 26px;
-  height: 26px;
+.tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+.icon-btn {
+  color: var(--ink-faint);
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+.icon-btn:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.habit-chip {
+  border: 1px solid var(--border);
   border-radius: 8px;
-  border: 1.5px solid;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.day-cell {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 10px;
   transition: all 0.15s;
 }
-.habit-cell:hover {
-  filter: brightness(0.95);
+.day-cell-done {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0a0a0d;
 }
 
-.tab-btn {
-  padding: 8px 18px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--brown);
-  background: transparent;
-  border: 1px solid transparent;
-  transition: all 0.15s;
+.cal-day {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px;
+  text-align: center;
+  min-width: 56px;
 }
-.tab-btn:hover {
-  background: rgba(207, 187, 159, 0.3);
-}
-.tab-btn-active {
-  background: var(--brown);
-  color: white;
+.cal-day-active {
+  border-color: var(--accent);
+  background: rgba(125, 211, 168, 0.08);
 }

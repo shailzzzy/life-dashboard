@@ -1,24 +1,27 @@
 // Single flexible data blob for the whole dashboard.
 // New features = new keys here. No DB migrations required.
 
-export interface Task {
+export interface Operator {
+  name: string;
+  title: string;
+  focus: string;
+  streak: number;
+}
+
+export interface TodayTask {
   id: string;
   text: string;
+  tag: string;
   completed: boolean;
-  weekKey: string; // e.g. "2026-W28"
-  createdAt: string;
+  date: string; // YYYY-MM-DD
 }
 
 export interface CustomHabit {
   id: string;
   label: string;
   sublabel?: string;
-  icon: string; // emoji
-  color: string;
-  bg: string;
-  border: string;
-  goal: number; // e.g. 5 out of 7 days
-  section: "daily" | "devotional";
+  icon: string;
+  goal: number; // times per week
 }
 
 export interface HabitLog {
@@ -26,41 +29,58 @@ export interface HabitLog {
   date: string; // YYYY-MM-DD
 }
 
-export interface Goal {
+export interface CalEvent {
   id: string;
-  periodKey: string; // "2026-Q3" or "2026"
-  category: "Finance" | "Health" | "Career" | "Personal";
+  date: string; // YYYY-MM-DD
+  startTime: string; // "10:00"
+  endTime?: string;
+  title: string;
+}
+
+export interface GoalItem {
+  id: string;
   text: string;
   completed: boolean;
 }
 
-export interface YearlyReflection {
-  vision: string;
-  nonNegotiables: string;
-  focus: string;
-  change: string;
+export interface NutritionEntry {
+  id: string;
+  date: string;
+  text: string;
+  kcal: number;
 }
 
 export interface DashboardData {
-  tasks: Task[];
-  weeklyFocus: Record<string, string>; // weekKey -> focus text
-  reflections: Record<string, string>; // weekKey -> reflection text
+  operator: Operator;
+  tasksToday: TodayTask[];
   habits: CustomHabit[];
   habitLogs: HabitLog[];
-  goals: Goal[];
-  yearlyReflections: Record<string, YearlyReflection>; // year -> reflection
+  calendarEvents: CalEvent[];
+  goalsWeekly: GoalItem[];
+  goalsMonthly: GoalItem[];
+  nutritionLog: NutritionEntry[];
+  nutritionGoalKcal: number;
+  financeSheetUrl: string; // published-to-web CSV url
 }
 
 export const emptyDashboardData: DashboardData = {
-  tasks: [],
-  weeklyFocus: {},
-  reflections: {},
+  operator: {
+    name: "Shailen",
+    title: "Accounting Manager",
+    focus: "Landing the next role.",
+    streak: 0,
+  },
+  tasksToday: [],
   habits: [
-    { id: "h1", label: "Applied to jobs", icon: "💼", color: "#785b4e", bg: "#f6efdf", border: "#cfbb9f", goal: 5, section: "daily" },
-    { id: "h2", label: "Exercise", icon: "🏃", color: "#7a816c", bg: "#eef1e8", border: "#8e967d", goal: 4, section: "daily" },
-    { id: "h3", label: "Gratitude", icon: "🙏", color: "#d68d84", bg: "#fbeceb", border: "#d68d84", goal: 7, section: "devotional" },
+    { id: "h1", label: "Job applications", icon: "💼", goal: 5 },
+    { id: "h2", label: "Gym", icon: "🏋️", goal: 4 },
+    { id: "h3", label: "Reading", icon: "📖", goal: 5 },
   ],
   habitLogs: [],
-  goals: [],
-  yearlyReflections: {},
+  calendarEvents: [],
+  goalsWeekly: [],
+  goalsMonthly: [],
+  nutritionLog: [],
+  nutritionGoalKcal: 2200,
+  financeSheetUrl: "",
 };

@@ -2,16 +2,31 @@
 
 import { useEffect, useRef, useState } from "react";
 import { DashboardData, emptyDashboardData } from "@/lib/types";
-import WeekView from "@/components/WeekView";
-import HabitTracker from "@/components/HabitTracker";
-import GoalsView from "@/components/GoalsView";
+import TopNav, { Tab } from "@/components/TopNav";
+import OperatorCard from "@/components/OperatorCard";
+import SessionCard from "@/components/SessionCard";
+import FinancePulse from "@/components/FinancePulse";
+import TodayTasks from "@/components/TodayTasks";
+import HabitsGrid from "@/components/HabitsGrid";
+import CalendarStrip from "@/components/CalendarStrip";
+import GoalsPanel from "@/components/GoalsPanel";
+import NutritionLog from "@/components/NutritionLog";
 
-type Tab = "week" | "habits" | "goals";
+function ComingSoon({ label }: { label: string }) {
+  return (
+    <div className="max-w-4xl mx-auto px-6 py-24 text-center">
+      <div className="tile-label mono">{label}</div>
+      <div className="text-lg mt-2" style={{ color: "var(--ink-faint)" }}>
+        Coming soon.
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   const [data, setData] = useState<DashboardData>(emptyDashboardData);
   const [loaded, setLoaded] = useState(false);
-  const [tab, setTab] = useState<Tab>("week");
+  const [tab, setTab] = useState<Tab>("HOME");
   const [saving, setSaving] = useState(false);
   const saveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -27,7 +42,6 @@ export default function Home() {
   function update(updater: (d: DashboardData) => DashboardData) {
     setData((prev) => {
       const next = updater(prev);
-      // throttle auto-save so we're not hitting the DB on every keystroke
       if (saveTimeout.current) clearTimeout(saveTimeout.current);
       saveTimeout.current = setTimeout(async () => {
         setSaving(true);
@@ -43,33 +57,41 @@ export default function Home() {
   }
 
   if (!loaded) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+    return (
+      <div className="os-shell min-h-screen flex items-center justify-center mono text-sm" style={{ color: "var(--ink-faint)" }}>
+        LOADING…
+      </div>
+    );
   }
 
+  const initials = data.operator.name.slice(0, 2).toUpperCase();
+
   return (
-    <div className="min-h-screen">
-      <header className="max-w-4xl mx-auto px-6 pt-10 pb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-[color:var(--ink)]">✦ Shailen&apos;s Dashboard</h1>
-        <span className="text-xs opacity-50">{saving ? "Saving…" : "Saved"}</span>
-      </header>
+    <div className="os-shell">
+      <TopNav tab={tab} setTab={setTab} saving={saving} initials={initials} />
 
-      <nav className="max-w-4xl mx-auto px-6 flex gap-2 mb-8">
-        {(["week", "habits", "goals"] as Tab[]).map((t) => (
-          <button
-            key={t}
-            onClick={() => setTab(t)}
-            className={`tab-btn ${tab === t ? "tab-btn-active" : ""}`}
-          >
-            {t === "week" ? "Week" : t === "habits" ? "Habits" : "Goals"}
-          </button>
-        ))}
-      </nav>
+      {tab === "HOME" && (
+        <div className="os-grid">
+          <div className="os-col">
+            <OperatorCard data={data} update={update} />
+            <FinancePulse data={data} update={update} />
+            <TodayTasks data={data} update={update} />
+          </div>
+          <div className="os-col">
+            <SessionCard data={data} update={update} />
+            <HabitsGrid data={data} update={update} />
+            <CalendarStrip data={data} update={update} />
+          </div>
+          <div className="os-col">
+            <GoalsPanel data={data} update={update} />
+            <NutritionLog data={data} update={update} />
+          </div>
+        </div>
+      )}
 
-      <main className="max-w-4xl mx-auto px-6 pb-16">
-        {tab === "week" && <WeekView data={data} update={update} />}
-        {tab === "habits" && <HabitTracker data={data} update={update} />}
-        {tab === "goals" && <GoalsView data={data} update={update} />}
-      </main>
+      {tab === "BRAIN" && <ComingSoon label="02 // BRAIN" />}
+      {tab === "FINANCE" && <ComingSoon label="03 // FINANCE" />}
+      {tab === "HEALTH" && <ComingSoon label="04 // HEALTH" />}
     </div>
   );
 }
