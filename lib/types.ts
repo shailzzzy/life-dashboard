@@ -66,7 +66,7 @@ export interface DashboardData {
 export const emptyDashboardData: DashboardData = {
   operator: {
     name: "Shailen",
-    title: "Accounting Manager",
+    title: "",
     focus: "Landing the next role.",
     streak: 0,
   },
