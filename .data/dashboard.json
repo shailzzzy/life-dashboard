@@ -1,0 +1,36 @@
+{
+  "operator": {
+    "name": "Shailen",
+    "title": "",
+    "focus": "Landing the next role.",
+    "streak": 0
+  },
+  "tasksToday": [],
+  "habits": [
+    {
+      "id": "h1",
+      "label": "Job applications",
+      "icon": "💼",
+      "goal": 5
+    },
+    {
+      "id": "h2",
+      "label": "Gym",
+      "icon": "🏋️",
+      "goal": 4
+    },
+    {
+      "id": "h3",
+      "label": "Reading",
+      "icon": "📖",
+      "goal": 5
+    }
+  ],
+  "habitLogs": [],
+  "calendarEvents": [],
+  "goalsWeekly": [],
+  "goalsMonthly": [],
+  "nutritionLog": [],
+  "nutritionGoalKcal": 2200,
+  "financeSheetUrl": ""
+}
