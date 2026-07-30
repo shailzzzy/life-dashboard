@@ -31,21 +31,19 @@ function dateKey(date: Date) {
 }
 
 function monthGrid(anchor: Date) {
-  const mondayOffset = (anchor.getDay() + 6) % 7;
-  const start = new Date(anchor);
-  start.setDate(anchor.getDate() - mondayOffset);
+  const year = anchor.getFullYear();
+  const month = anchor.getMonth();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-  return Array.from({ length: 28 }, (_, index) => {
-    const date = new Date(start);
-    date.setDate(start.getDate() + index);
-    return date;
+  return Array.from({ length: daysInMonth }, (_, index) => {
+    return new Date(year, month, index + 1);
   });
 }
 
 export default function CalendarStrip({ data, update }: Props) {
   const now = new Date();
   const today = dateKey(now);
-  const [month, setMonth] = useState(() => now);
+  const [month, setMonth] = useState(() => new Date(now.getFullYear(), now.getMonth(), 1));
   const [selected, setSelected] = useState(today);
   const [newEvent, setNewEvent] = useState({ startTime: "", endTime: "", title: "" });
   const [googleEvents, setGoogleEvents] = useState<GoogleCalendarEvent[]>([]);
@@ -110,11 +108,9 @@ export default function CalendarStrip({ data, update }: Props) {
   }
 
   function changeMonth(offset: number) {
-    setMonth((current) => {
-      const next = new Date(current);
-      next.setDate(current.getDate() + offset * 28);
-      return next;
-    });
+    const next = new Date(month.getFullYear(), month.getMonth() + offset, 1);
+    setMonth(next);
+    setSelected(dateKey(next));
   }
 
   async function addEvent() {
@@ -223,13 +219,7 @@ export default function CalendarStrip({ data, update }: Props) {
         <div>
           <span className="tile-label">Calendar</span>
           <h2 className="month-calendar-title">
-            {days[0].toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
-            {" — "}
-            {days[days.length - 1].toLocaleDateString("en-GB", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            })}
+            {month.toLocaleDateString("en-GB", { month: "long", year: "numeric" })}
           </h2>
         </div>
 
@@ -260,11 +250,12 @@ export default function CalendarStrip({ data, update }: Props) {
           <div key={day} className="month-calendar-dow">{day}</div>
         ))}
 
-        {days.map((date) => {
+        {days.map((date, index) => {
           const key = dateKey(date);
           const events = eventsFor(date);
           const isSelected = key === selected;
           const isToday = key === today;
+          const firstDayColumn = ((date.getDay() + 6) % 7) + 1;
 
           return (
             <button
@@ -276,6 +267,7 @@ export default function CalendarStrip({ data, update }: Props) {
                 isSelected ? "is-selected" : "",
                 isToday ? "is-today" : "",
               ].join(" ")}
+              style={index === 0 ? { gridColumnStart: firstDayColumn } : undefined}
               aria-label={`${date.toLocaleDateString("en-GB", { day: "numeric", month: "long" })}, ${events.length} events`}
             >
               <span className="month-calendar-number">{date.getDate()}</span>
