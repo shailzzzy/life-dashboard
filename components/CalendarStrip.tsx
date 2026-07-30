@@ -78,6 +78,20 @@ export default function CalendarStrip({ data, update }: Props) {
 
   useEffect(() => {
     syncGoogle();
+    const interval = window.setInterval(syncGoogle, 30000);
+
+    function syncOnReturn() {
+      if (document.visibilityState === "visible") syncGoogle();
+    }
+
+    document.addEventListener("visibilitychange", syncOnReturn);
+    window.addEventListener("focus", syncGoogle);
+
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", syncOnReturn);
+      window.removeEventListener("focus", syncGoogle);
+    };
   }, [syncGoogle]);
 
   const allEvents = useMemo(
