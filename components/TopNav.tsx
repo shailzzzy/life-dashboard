@@ -2,8 +2,13 @@
 
 import { useEffect, useState } from "react";
 
-export type Tab = "HOME" | "BRAIN" | "FINANCE" | "HEALTH";
-const TABS: Tab[] = ["HOME", "BRAIN", "FINANCE", "HEALTH"];
+export type Tab = "MASTER" | "FITNESS" | "FINANCE";
+
+const TABS: { id: Tab; label: string }[] = [
+  { id: "MASTER", label: "MASTER OS" },
+  { id: "FITNESS", label: "FITNESS OS" },
+  { id: "FINANCE", label: "FINANCE OS" },
+];
 
 interface Props {
   tab: Tab;
@@ -35,13 +40,13 @@ export default function TopNav({ tab, setTab, saving, initials }: Props) {
       </div>
 
       <div className="nav-tabs">
-        {TABS.map((t) => (
+        {TABS.map((item) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
-            className={`nav-tab ${tab === t ? "nav-tab-active" : ""}`}
+            key={item.id}
+            onClick={() => setTab(item.id)}
+            className={`nav-tab ${tab === item.id ? "nav-tab-active" : ""}`}
           >
-            {t}
+            {item.label}
           </button>
         ))}
       </div>

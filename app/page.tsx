@@ -26,7 +26,7 @@ function ComingSoon({ label }: { label: string }) {
 export default function Home() {
   const [data, setData] = useState<DashboardData>(emptyDashboardData);
   const [loaded, setLoaded] = useState(false);
-  const [tab, setTab] = useState<Tab>("HOME");
+  const [tab, setTab] = useState<Tab>("MASTER");
   const [saving, setSaving] = useState(false);
   const saveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -70,7 +70,7 @@ export default function Home() {
     <div className="os-shell">
       <TopNav tab={tab} setTab={setTab} saving={saving} initials={initials} />
 
-      {tab === "HOME" && (
+      {tab === "MASTER" && (
         <div className="os-grid">
           <div className="os-col">
             <OperatorCard data={data} update={update} />
@@ -89,9 +89,8 @@ export default function Home() {
         </div>
       )}
 
-      {tab === "BRAIN" && <ComingSoon label="02 // BRAIN" />}
-      {tab === "FINANCE" && <ComingSoon label="03 // FINANCE" />}
-      {tab === "HEALTH" && <ComingSoon label="04 // HEALTH" />}
+      {tab === "FITNESS" && <ComingSoon label="FITNESS OS" />}
+      {tab === "FINANCE" && <ComingSoon label="FINANCE OS" />}
     </div>
   );
 }
