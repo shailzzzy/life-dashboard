@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { DashboardData, emptyDashboardData } from "@/lib/types";
 import TopNav, { Tab } from "@/components/TopNav";
-import OperatorCard from "@/components/OperatorCard";
 import SessionCard from "@/components/SessionCard";
 import TodayTasks from "@/components/TodayTasks";
 import HabitsGrid from "@/components/HabitsGrid";
@@ -112,12 +111,13 @@ export default function Home() {
           </div>
 
           <div className="os-grid os-grid-two">
+            <div className="os-span-full">
+              <SessionCard data={data} update={update} />
+            </div>
             <div className="os-col">
-              <OperatorCard data={data} update={update} />
               <TodayTasks data={data} update={update} />
             </div>
             <div className="os-col">
-              <SessionCard data={data} update={update} />
               <HabitsGrid data={data} update={update} />
               <CalendarStrip data={data} update={update} />
             </div>
