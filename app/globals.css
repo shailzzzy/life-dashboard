@@ -521,8 +521,22 @@ body {
 }
 
 .calendar-day-event > .tag {
-  width: 58px;
+  width: 94px;
   flex-shrink: 0;
+}
+
+.calendar-edit-event {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(125, 211, 168, 0.035);
+}
+
+.calendar-date-input {
+  width: 142px;
 }
 
 .calendar-source {
@@ -531,6 +545,13 @@ body {
   letter-spacing: 0.06em;
   color: var(--accent);
   text-transform: uppercase;
+}
+
+.calendar-error {
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--accent-red);
 }
 
 .calendar-add-event {
@@ -564,6 +585,11 @@ body {
   background: rgba(255, 255, 255, 0.06);
 }
 
+.calendar-add-button:disabled {
+  cursor: wait;
+  opacity: 0.5;
+}
+
 @media (max-width: 760px) {
   .month-calendar-header {
     align-items: flex-start;
@@ -580,6 +606,11 @@ body {
   }
 
   .calendar-add-event {
+    flex-wrap: wrap;
+  }
+
+  .calendar-edit-event {
+    align-items: stretch;
     flex-wrap: wrap;
   }
 
