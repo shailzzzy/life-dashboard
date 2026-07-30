@@ -5,12 +5,9 @@ import { DashboardData, emptyDashboardData } from "@/lib/types";
 import TopNav, { Tab } from "@/components/TopNav";
 import OperatorCard from "@/components/OperatorCard";
 import SessionCard from "@/components/SessionCard";
-import FinancePulse from "@/components/FinancePulse";
 import TodayTasks from "@/components/TodayTasks";
 import HabitsGrid from "@/components/HabitsGrid";
 import CalendarStrip from "@/components/CalendarStrip";
-import GoalsPanel from "@/components/GoalsPanel";
-import NutritionLog from "@/components/NutritionLog";
 
 const OS_TILES: { id: Tab; title: string; summary: string }[] = [
   {
@@ -114,20 +111,15 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="os-grid">
+          <div className="os-grid os-grid-two">
             <div className="os-col">
               <OperatorCard data={data} update={update} />
-              <FinancePulse data={data} update={update} />
               <TodayTasks data={data} update={update} />
             </div>
             <div className="os-col">
               <SessionCard data={data} update={update} />
               <HabitsGrid data={data} update={update} />
               <CalendarStrip data={data} update={update} />
-            </div>
-            <div className="os-col">
-              <GoalsPanel data={data} update={update} />
-              <NutritionLog data={data} update={update} />
             </div>
           </div>
         </>
