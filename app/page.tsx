@@ -5,7 +5,6 @@ import { DashboardData, emptyDashboardData } from "@/lib/types";
 import TopNav, { Tab } from "@/components/TopNav";
 import SessionCard from "@/components/SessionCard";
 import TodayTasks from "@/components/TodayTasks";
-import HabitsGrid from "@/components/HabitsGrid";
 import CalendarStrip from "@/components/CalendarStrip";
 
 const OS_TILES: { id: Tab; title: string; summary: string }[] = [
@@ -117,8 +116,7 @@ export default function Home() {
             <div className="os-col">
               <TodayTasks data={data} update={update} />
             </div>
-            <div className="os-col">
-              <HabitsGrid data={data} update={update} />
+            <div className="os-span-full">
               <CalendarStrip data={data} update={update} />
             </div>
           </div>
