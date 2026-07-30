@@ -50,26 +50,10 @@ export default function OperatorCard({ data, update }: Props) {
             className="os-input mono"
             style={{ border: "none", padding: 0, fontSize: 14, fontWeight: 600 }}
           />
-          <input
-            value={operator.title}
-            onChange={(e) => setField("title", e.target.value)}
-            className="os-input"
-            style={{ border: "none", padding: 0, fontSize: 11, color: "var(--ink-faint)" }}
-          />
         </div>
       </div>
 
-      <div className="mt-4">
-        <span className="tag">Focus</span>
-        <input
-          value={operator.focus}
-          onChange={(e) => setField("focus", e.target.value)}
-          className="os-input mt-1"
-          style={{ fontStyle: "italic" }}
-        />
-      </div>
-
-      <div className="mt-3 flex items-center justify-between">
+      <div className="mt-4 flex items-center justify-between">
         <span className="tag">Streak</span>
         <span className="mono text-sm">{operator.streak} days</span>
       </div>
