@@ -28,7 +28,7 @@ function monthGrid(anchor: Date) {
   const start = new Date(first);
   start.setDate(first.getDate() - mondayOffset);
 
-  return Array.from({ length: 42 }, (_, index) => {
+  return Array.from({ length: 28 }, (_, index) => {
     const date = new Date(start);
     date.setDate(start.getDate() + index);
     return date;
@@ -165,7 +165,7 @@ export default function CalendarStrip({ data, update }: Props) {
             >
               <span className="month-calendar-number">{date.getDate()}</span>
               <span className="month-calendar-events">
-                {events.slice(0, 3).map((event) => (
+                {events.slice(0, 2).map((event) => (
                   <span
                     key={`${"source" in event ? event.source : "local"}-${event.id}`}
                     className={`month-calendar-event ${"source" in event ? "is-google" : ""}`}
@@ -173,7 +173,7 @@ export default function CalendarStrip({ data, update }: Props) {
                     {event.startTime && <span>{event.startTime}</span>} {event.title}
                   </span>
                 ))}
-                {events.length > 3 && <span className="month-calendar-more">+{events.length - 3} more</span>}
+                {events.length > 2 && <span className="month-calendar-more">+{events.length - 2} more</span>}
               </span>
             </button>
           );
